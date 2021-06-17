@@ -1,0 +1,58 @@
+{
+  "name": "vue-debugger",
+  "version": "1.0.0",
+  "description": "Vue.js console debugger component and utility. Onscreen realtime console logger.",
+  "main": "./dist/vue-debugger.common.js",
+  "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "vue-cli-service serve",
+    "build-library": "vue-cli-service build --target lib --name vue-debugger ./src/index.js",
+    "lint": "vue-cli-service lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ohadsh535/vue-debugger.git"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "debug",
+    "inspector",
+    "developer",
+    "utility",
+    "tools",
+    "console"
+  ],
+  "files": [
+    "dist/*"
+  ],
+  "author": "ohadsh535",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ohadsh535/vue-debugger/issues"
+  },
+  "homepage": "https://github.com/ohadsh535/vue-debugger#readme",
+  "devDependencies": {
+    "@mdi/font": "^5.9.55",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.28.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.11.1",
+    "prettier": "^2.3.1",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "vue": "^2.6.14"
+  }
+}
