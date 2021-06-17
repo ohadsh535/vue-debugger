@@ -1,6 +1,5 @@
 import { events } from "./events";
 import VueDebugger from "./VueDebugger";
-import "@mdi/font/css/materialdesignicons.css";
 
 export const Debug = {
   install(Vue, args = {}) {
@@ -27,6 +26,7 @@ export const Debug = {
       };
 
       if (this.overrideConsoleLog) {
+        /* eslint-disable-next-line no-console */
         console[method] = function (data, preventRedundancy) {
           if (!preventRedundancy) {
             acc[method](data);
