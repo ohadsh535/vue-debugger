@@ -26,7 +26,9 @@ export default {
   },
   methods: {
     toggleView() {
-      this.view = this.view === 'code' ? 'login' : 'code';
+      const newView = this.view === 'code' ? 'login' : 'code';
+      console.warn(`Changed view: ${this.view} -> ${newView}`)
+      this.view = newView;
     }
   }
 }

@@ -77,7 +77,7 @@ export default {
 
       setTimeout(() => {
         const elem = this.$refs.logsContainer;
-        elem.scrollTop = elem.scrollHeight;
+        if (elem) elem.scrollTop = elem.scrollHeight;
       }, 200);
     },
     clear() {
