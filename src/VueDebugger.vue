@@ -118,6 +118,7 @@ export default {
   width: 100%;
   text-align: left;
   direction: ltr;
+  z-index: 1;
 }
 .vue-debugger--header {
   align-items: center;

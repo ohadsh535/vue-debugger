@@ -5,7 +5,6 @@
 </p>
 
 [![npm version](https://badge.fury.io/js/vue-debugger.svg)](https://badge.fury.io/js/vue-debugger)
-[![dependencies](https://img.shields.io/david/ohadsh535/vue-debugger)](https://badge.fury.io/js/vue-debugger)
 [![minifiedSize](https://img.shields.io/bundlephobia/min/vue-debugger)](https://badge.fury.io/js/vue-debugger)
 [![license](https://img.shields.io/github/license/ohadsh535/vue-debugger)](https://badge.fury.io/js/vue-debugger)
 
@@ -22,7 +21,6 @@
 - http://vue-debugger.octa-code.com/
 
 ## Setup
-
 
 ```bash
 npm install --save vue-debugger
@@ -65,10 +63,30 @@ import Vue from 'vue'
 
 Vue.debug.log('Logged by Vue')
 ```
+## Usage
+
+### Nuxt.js
+
+#### nuxt.config.js
+
+```js
+plugins: [
+  { src: 'plugins/vue-debugger-ssr.js', ssr: false }
+]
+```
+
+#### vue-debugger-ssr.js
+
+```js
+import Vue from 'vue';
+import VueDebugger from 'vue-debugger';
+import 'vue-debugger/dist/vue-debugger.css';
+
+Vue.use(VueDebugger);
+```
+
 
 ### Features
-
-
 
 | Features                     | Type          | Description                                                  |
 | ---------------------------- | ------------- | ------------------------------------------------------------ |
