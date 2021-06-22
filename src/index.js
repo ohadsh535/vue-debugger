@@ -8,7 +8,8 @@ export const Debug = {
       const msgType = typeof msg;
       switch (msgType) {
         case "object":
-          formattedMsg = JSON.stringify(msg, null, 2);
+          if (msg.message && msg.stack) formattedMsg = msg.message;
+          else formattedMsg = JSON.stringify(msg, null, 2);
           break;
       }
 

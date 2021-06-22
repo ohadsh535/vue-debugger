@@ -2,6 +2,7 @@
   <div id="app">
     <div id="main">
       <div class="navigator">
+        <a href="https://badge.fury.io/js/vue-debugger" rel="nofollow"><img src="https://camo.githubusercontent.com/f973a2499d2acbd885d5f85b200d9ecc04e645d1eebc12532ae2cd6f320f931b/68747470733a2f2f62616467652e667572792e696f2f6a732f7675652d64656275676765722e737667" alt="npm version" data-canonical-src="https://badge.fury.io/js/vue-debugger.svg" style="max-width:100%;"></a>
         <a href="#" @click="toggleView">{{view === 'code' ? 'Example 2' : 'Example 1'}}</a>
       </div>
       <exec-code v-if="view === 'code'"/>
@@ -49,8 +50,12 @@ body {
 }
 .navigator {
   background: #2c3e50;
-  padding: 3px;
+  padding: 5px 15px;
   text-align: end;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .navigator a {
   color: #fff;
