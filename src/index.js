@@ -3,6 +3,18 @@ import VueDebugger from "./VueDebugger";
 
 export const Debug = {
   install(Vue, args = {}) {
+    function formatMsg(msg) {
+      let formattedMsg = msg;
+      const msgType = typeof msg;
+      switch (msgType) {
+        case "object":
+          formattedMsg = JSON.stringify(msg, null, 2);
+          break;
+      }
+
+      return formattedMsg;
+    }
+
     if (this.installed) return;
 
     this.installed = true;
@@ -18,24 +30,24 @@ export const Debug = {
     const { ...prevConsole } = console;
 
     const methods = supportedMethods.reduce((acc, method) => {
-      acc[method] = (msg) => {
+      acc[method] = function (...optionalParams) {
+        const msgArr = optionalParams[0] || [];
+
+        const formattedMsgArr = msgArr.map((item) => {
+          return formatMsg(item);
+        });
+
         events.$emit("log", {
-          message: msg,
+          message: formattedMsgArr.join("\n"),
           severity: method,
         });
       };
 
       if (this.overrideConsoleLog) {
         /* eslint-disable-next-line no-console */
-        console[method] = function (data, preventRedundancy) {
-          if (!preventRedundancy) {
-            acc[method](data);
-            prevConsole[method].call(
-              this,
-              data,
-              "\n--\n**!! VueDebugger active !!**"
-            );
-          }
+        console[method] = function (...args) {
+          acc[method](args);
+          prevConsole[method].call(this, ...args);
         };
       }
       return acc;
