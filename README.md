@@ -94,6 +94,7 @@ Vue.use(VueDebugger);
 | ```Vue.debug.XXX``` log      | log           | Log directly to component view but not to browser console.   |
 | Expand - Minimize            | view          | View Modes control to minimize, expand console view.         |
 | clear                        | view          | Clear console messages.                                      |
+| `expanded: Boolean`          | prop          | Mount console expanded.                                      |
 
 ## FAQ
 

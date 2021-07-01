@@ -52,6 +52,12 @@ import { events } from "./events";
 
 export default {
   name: "VueDebugger",
+  props: {
+    expanded: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data: function () {
     return {
       messages: [],
@@ -60,6 +66,7 @@ export default {
     };
   },
   mounted() {
+    this.isMinimized = !this.expanded;
     events.$on("log", this.log);
   },
   methods: {
