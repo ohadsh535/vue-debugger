@@ -1,6 +1,6 @@
 {
   "name": "vue-debugger",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Vue.js console debugger component and utility. Onscreen realtime console logger.",
   "main": "./dist/vue-debugger.common.js",
   "private": false,
