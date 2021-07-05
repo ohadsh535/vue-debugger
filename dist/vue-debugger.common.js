@@ -239,7 +239,7 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 
 const events = new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({ name: "vue-debugger" });
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"a574c452-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/VueDebugger.vue?vue&type=template&id=5dd87c85&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"28607324-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/VueDebugger.vue?vue&type=template&id=5dd87c85&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vue-debugger--container font-family-monospaced",class:_vm.containerClass},[_c('div',{staticClass:"vue-debugger--header"},[_c('div',{staticClass:"cursor-pointer",class:_vm.headerTitleClass,on:{"click":function($event){_vm.isMinimized = false}}},[_vm._v(" Console ")]),_c('div',{staticClass:"spacer"}),(!_vm.isMinimized)?[_c('button',{staticClass:"vue-debugger--btn",on:{"click":function($event){_vm.isMinimized = true}}},[_c('svg',{staticStyle:{"width":"22px","height":"22px"},attrs:{"viewBox":"0 0 32 25"}},[_c('path',{attrs:{"fill":"currentColor","d":"M19,13H5V11H19V13Z"}})])]),_c('button',{staticClass:"vue-debugger--btn",on:{"click":_vm.clear}},[_c('svg',{staticStyle:{"width":"22px","height":"22px"},attrs:{"viewBox":"0 0 32 25"}},[_c('path',{attrs:{"fill":"currentColor","d":"M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z"}})])])]:_vm._e()],2),_c('div',{ref:"logsContainer",staticClass:"vue-debugger--logs-container",attrs:{"id":"logsContainer"}},[_vm._l((_vm.messages),function(msg){return [_c('div',{key:msg.body,staticClass:"vue-debugger--log-line",class:msg.class},[_vm._v(" "+_vm._s(msg.body)+" ")])]}),(!_vm.messages.length)?_c('div',{staticClass:"empty-msg"},[_vm._v("- Logs are clean -")]):_vm._e()],2)])}
 var staticRenderFns = []
 
@@ -495,7 +495,12 @@ var component = normalizeComponent(
 
 
 const Debug = {
-  install(Vue, args = {}) {
+  install(
+    Vue,
+    args = {
+      componentName: null,
+    }
+  ) {
     function formatMsg(msg) {
       let formattedMsg = msg;
       const msgType = typeof msg;
@@ -523,29 +528,47 @@ const Debug = {
 
     const { ...prevConsole } = console;
 
+    // Prototype new console object.
+    if (this.overrideConsoleLog) {
+      // eslint-disable-next-line no-global-assign
+      console = {};
+    }
+
     const methods = supportedMethods.reduce((acc, method) => {
       acc[method] = function (...optionalParams) {
-        const msgArr = optionalParams[0] || [];
+        try {
+          const msgArr = optionalParams[0] || [];
 
-        const formattedMsgArr = msgArr.map((item) => {
-          return formatMsg(item);
-        });
+          const formattedMsgArr = msgArr.map((item) => {
+            return formatMsg(item);
+          });
 
-        events.$emit("log", {
-          message: formattedMsgArr.join("\n"),
-          severity: method,
-        });
+          events.$emit("log", {
+            message: formattedMsgArr.join("\n"),
+            severity: method,
+          });
+        } catch (err) {
+          prevConsole.log("vue-debugger exception", err);
+        }
       };
 
       if (this.overrideConsoleLog) {
         /* eslint-disable-next-line no-console */
         console[method] = function (...args) {
           acc[method](args);
+
           prevConsole[method].call(this, ...args);
         };
       }
       return acc;
     }, {});
+
+    // Re-assign console with non-overridden methods.
+    Object.keys(prevConsole)
+      .filter((name) => !supportedMethods.includes(name))
+      .map((funcName) => {
+        console[funcName] = prevConsole[funcName];
+      });
 
     window.addEventListener("error", function (e) {
       Vue.prototype["$" + name].error(e.message);

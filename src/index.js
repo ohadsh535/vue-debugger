@@ -2,7 +2,12 @@ import { events } from "./events";
 import VueDebugger from "./VueDebugger";
 
 export const Debug = {
-  install(Vue, args = {}) {
+  install(
+    Vue,
+    args = {
+      componentName: null,
+    }
+  ) {
     function formatMsg(msg) {
       let formattedMsg = msg;
       const msgType = typeof msg;
@@ -30,29 +35,47 @@ export const Debug = {
 
     const { ...prevConsole } = console;
 
+    // Prototype new console object.
+    if (this.overrideConsoleLog) {
+      // eslint-disable-next-line no-global-assign
+      console = {};
+    }
+
     const methods = supportedMethods.reduce((acc, method) => {
       acc[method] = function (...optionalParams) {
-        const msgArr = optionalParams[0] || [];
+        try {
+          const msgArr = optionalParams[0] || [];
 
-        const formattedMsgArr = msgArr.map((item) => {
-          return formatMsg(item);
-        });
+          const formattedMsgArr = msgArr.map((item) => {
+            return formatMsg(item);
+          });
 
-        events.$emit("log", {
-          message: formattedMsgArr.join("\n"),
-          severity: method,
-        });
+          events.$emit("log", {
+            message: formattedMsgArr.join("\n"),
+            severity: method,
+          });
+        } catch (err) {
+          prevConsole.log("vue-debugger exception", err);
+        }
       };
 
       if (this.overrideConsoleLog) {
         /* eslint-disable-next-line no-console */
         console[method] = function (...args) {
           acc[method](args);
+
           prevConsole[method].call(this, ...args);
         };
       }
       return acc;
     }, {});
+
+    // Re-assign console with non-overridden methods.
+    Object.keys(prevConsole)
+      .filter((name) => !supportedMethods.includes(name))
+      .map((funcName) => {
+        console[funcName] = prevConsole[funcName];
+      });
 
     window.addEventListener("error", function (e) {
       Vue.prototype["$" + name].error(e.message);
