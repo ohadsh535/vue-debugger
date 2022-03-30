@@ -14,12 +14,12 @@
 # Vue.js Console Debugger
 
 <p align="center">
-  <img src="https://cdn.thu.bz/vue-debugger-login.gif">
+  <img src="http://cdn.thu.bz/vue-debugger-login.gif">
 </p>
 
 ## Demo
 
-- http://vue-debugger.octa-code.com/
+- https://vue-debugger.octa-code.com/
 
 ## Setup
 
