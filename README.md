@@ -5,15 +5,16 @@
 </p>
 
 [![npm version](https://badge.fury.io/js/vue-debugger.svg)](https://badge.fury.io/js/vue-debugger)
-[![minifiedSize](https://img.shields.io/bundlephobia/min/vue-debugger)](https://badge.fury.io/js/vue-debugger)
-[![license](https://img.shields.io/github/license/ohadsh535/vue-debugger)](https://badge.fury.io/js/vue-debugger)
+[![minifiedSize](https://img.shields.io/bundlephobia/min/vue-debugger)](https://www.npmjs.com/package/vue-debugger)
+[![license](https://img.shields.io/github/license/ohadsh535/vue-debugger)](https://www.npmjs.com/package/vue-debugger)
+[![npm downloads](https://img.shields.io/npm/dt/vue-debugger)](https://www.npmjs.com/package/vue-debugger)
 
 [comment]: <> ([![npm]&#40;https://img.shields.io/npm/dm/vue-debugger.svg&#41;]&#40;https://www.npmjs.com/package/vue-debugger&#41;)
 
 # Vue.js Console Debugger
 
 <p align="center">
-  <img src="http://cdn.thu.bz/vue-debugger-login.gif">
+  <img src="https://cdn.thu.bz/vue-debugger-login.gif">
 </p>
 
 ## Demo
